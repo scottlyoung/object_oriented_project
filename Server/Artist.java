@@ -19,4 +19,10 @@ public class Artist extends Item
 	{
 		songs.add(song);
 	}
+
+	public void removeSong(Song song)
+	{
+		songs.remove(song);
+	}
+
 }
