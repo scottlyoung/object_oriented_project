@@ -20,7 +20,8 @@ public class Player
 
 	void playPlaylistSong()
 	{
-		playSong(currentPlaylist.getSongs()[positionInPlaylist]);
+		// commenting line below out because doesn't compile as is
+		//playSong(currentPlaylist.getSongs()[positionInPlaylist]);
 	}
 
 	public void playSong(Song song)
@@ -33,7 +34,7 @@ public class Player
 
 	public void skipForward()
 	{
-		if (positionInPlaylist >= currentPlaylist.getSongs().size() - 1) 
+		if (positionInPlaylist >= currentPlaylist.getSongs().size() - 1)
 		{
 			System.out.println("At end of playlist, can't skip forward.");
 			return;
