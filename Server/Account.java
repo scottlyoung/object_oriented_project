@@ -7,14 +7,22 @@ public class Account
 	private boolean isAdmin;
 	private List<Playlist> playlists;
 
-	Account()
+	public Account(String _name, String _password)
 	{
-
+		this.name = _name;
+		this.password = _password;
+		this.isAdmin = false;
+		this.playlists = new ArrayList<Playlist>();
 	}
 
 	public boolean isPassValid(String pass)
 	{
-		return true;
+		// consider storing a hash of the password instead of plaintext, then compare hashes
+		if(pass == password)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public List<Playlist> getAllPlaylists()
@@ -24,7 +32,12 @@ public class Account
 
 	public List<String> listPlaylists()
 	{
-		return null;
+		List<String> strPlaylists = new ArrayList<String>();
+		for(Playlist p : playlists)
+		{
+			strPlaylists.add(p.getName());
+		}
+		return strPlaylists;
 	}
 
 	public Playlist getPlaylist(String playlist)
