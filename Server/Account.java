@@ -42,11 +42,23 @@ public class Account
 
 	public Playlist getPlaylist(String playlist)
 	{
+		for(int i = 0; i < playlists.size(); i++)
+		{
+			if(playlists.get(i).getName().equals(playlist))
+			{
+				return playlists.get(i);
+			}
+		}
 		return null;
 	}
 
 	public boolean getIsAdmin()
 	{
 		return isAdmin;
+	}
+
+	public void setIsAdmin(boolean _isAdmin)
+	{
+		this.isAdmin = _isAdmin;
 	}
 }
