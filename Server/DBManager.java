@@ -48,7 +48,15 @@ public class DBManager
 
 	public List<Item> search(String search_text)
 	{
-		return items;
+		List<Item> results = new ArrayList<Item>();
+		for (Item item : this.items)
+		{
+			if (item.getName().toLowerCase().contains(search_text.toLowerCase()))
+			{
+				results.add(item);
+			}
+		}
+		return results;
 	}
 
 	public void addSong(Song song, Account account)

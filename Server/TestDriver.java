@@ -13,6 +13,9 @@ public class TestDriver
 		db.addSong(song2, acc);
 		db.addSong(song3, acc);
 
+		System.out.println(db.search("s"));
+		System.out.println(db.search("a"));
+
 		// start with account
 		Account test = new Account("janedoe12", "password123");
 
