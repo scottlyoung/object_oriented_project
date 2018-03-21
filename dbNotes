@@ -1,0 +1,23 @@
+Built in mysql
+
+Import/Export Databases
+-----------------------
+mysql -u username -p database_name < filename.sql
+mysqldump -u username -p database_name > filename.sql
+
+
+-the template file is just the database with columns setup without any data
+-the example file is a database that I populated with some data, below are SQL commands that will be useful later
+
+
+Query: search song table for one titled Pacing and gather the artist information as well
+SELECT title, songID, name, a.artistID FROM dbArtists a RIGHT JOIN dbSongs s ON a.artistID = s.artistID WHERE title = 'Pacing';
+
+Query: diplay all of The Allman Brothers Band songs
+SELECT title, songID FROM dbArtists a LEFT JOIN dbSongs s ON a.artistID = s.artistID WHERE name = 'The Allman Brothers Band';
+
+Query: show all of jjjacobsens playlists
+SELECT p.name, playlistID FROM dbPlaylists p RIGHT JOIN dbAccounts a ON p.accountID = a.accountID WHERE a.name = 'jjjacobsen';
+
+Query: show songs from janedeers playlist Tswizzle
+SELECT title as 'Song Name', s.songID, p.name AS 'Playlist Name' FROM dbAccounts a JOIN dbPlaylists p ON a.accountID = p.accountID JOIN dbPlaylistSongs ps ON p.playlistID = ps.playlistID JOIN dbSongs s ON ps.songID = s.songID WHERE (a.name = 'janedeer') and (p.name = 'Tswizzle');
