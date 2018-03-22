@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
- 
+
 import javax.sound.sampled.*;
 
 public class Player
@@ -13,13 +13,13 @@ public class Player
 	private int positionInPlaylist = 0;
 
 	private String playStatus = "paused";
-    private Clip clip;
-    private AudioInputStream audioInputStream;
-    private File songFile;
+  private Clip clip;
+  private AudioInputStream audioInputStream;
+  private File songFile;
 
 	public Player()
 	{
-		
+
 	}
 
 	public void playPlaylist(Playlist playlist)
@@ -37,9 +37,10 @@ public class Player
 
 	public void playNewSong(Song song)
 		throws UnsupportedAudioFileException,
-        IOException, LineUnavailableException 
+        IOException, LineUnavailableException
 	{
-		if (playStatus == "playing") {
+		if (playStatus == "playing")
+		{
 			pauseSong();
 		}
 
@@ -49,15 +50,17 @@ public class Player
 		audioInputStream = AudioSystem.getAudioInputStream(new File("test_audio.wav").getAbsoluteFile());
 		clip = AudioSystem.getClip();
 		clip.open(audioInputStream);
-		
+
 		resumeSong();
-		
+
 		//We need a way to tell when a song ends, maybe put the play method in the Song class and use observer
 		//pattern to tell when it finishes? Then this method would be used to subscribe to the song object
 	}
 
-	public void resumeSong() {
-		if (playStatus == "playing") {
+	public void resumeSong()
+	{
+		if (playStatus == "playing")
+		{
 			System.out.println("Audio already playing...");
 			return;
 		}
@@ -68,7 +71,8 @@ public class Player
 	}
 
 	public void pauseSong() {
-		if (playStatus == "paused") {
+		if (playStatus == "paused")
+		{
 			System.out.println("Audio already paused...");
 			return;
 		}

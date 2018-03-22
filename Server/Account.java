@@ -58,6 +58,7 @@ public class Account
 	{
 		Playlist tmp = new Playlist(_name);
 		playlists.add(tmp);
+		// add to database as well
 	}
 
 	public boolean getIsAdmin()
@@ -70,3 +71,28 @@ public class Account
 		this.isAdmin = _isAdmin;
 	}
 }
+
+
+/*
+this is code I wrote for if we have extra time, it is a way to hash the passwords
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public static String sha256Hash(String arg)
+{
+	try
+	{
+		MessageDigest hashAlgo = MessageDigest.getInstance("SHA-256");
+		hashAlgo.update(arg.getBytes());
+		byte[] hash = hashAlgo.digest();
+		StringBuffer hexValue = new StringBuffer();
+		for (byte b : hash) hexValue.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+		return hexValue.toString();
+	}
+	catch(NoSuchAlgorithmException e)
+	{
+		return null;
+	}
+}
+*/

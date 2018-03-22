@@ -17,12 +17,14 @@ public class Artist extends Item
 
 	public void addSong(Song song)
 	{
-		songs.add(song);
+		if(song.getArtist().equals(this.getName()))
+		{
+			songs.add(song);
+		}
 	}
 
 	public void removeSong(Song song)
 	{
 		songs.remove(song);
 	}
-
 }
