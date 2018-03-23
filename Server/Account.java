@@ -9,7 +9,6 @@ public class Account
 
 	public Account(String _name, String _password)
 	{
-		// only create the account if the username is not already in the database
 		this.name = _name;
 		this.password = _password;
 		this.isAdmin = false;
@@ -58,7 +57,6 @@ public class Account
 	{
 		Playlist tmp = new Playlist(_name);
 		playlists.add(tmp);
-		// add to database as well
 	}
 
 	public boolean getIsAdmin()
@@ -69,6 +67,11 @@ public class Account
 	public void setIsAdmin(boolean _isAdmin)
 	{
 		this.isAdmin = _isAdmin;
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 }
 

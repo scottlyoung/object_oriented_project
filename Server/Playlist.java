@@ -18,8 +18,24 @@ public class Playlist
 
 	public void addSong(Song song)
 	{
-		// this assumes the passed song object is good, probably want to check input before blindly adding to the List
 		songs.add(song);
+	}
+
+	public void removeSong(String song)
+	{
+		// implement
+	}
+
+	public Song getSong(String song)
+	{
+		for(int i = 0; i < songs.size(); i++)
+		{
+			if(songs.get(i).getName().equals(song))
+			{
+				return songs.get(i);
+			}
+		}
+		return null;
 	}
 
 	public void setName(String _name)
