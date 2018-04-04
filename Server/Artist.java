@@ -10,6 +10,16 @@ public class Artist extends Item
 		songs = new ArrayList<Song>();
 	}
 
+	public List<String> listSongs()
+	{
+		List<String> strSongs = new ArrayList<String>();
+		for(Song s : songs)
+		{
+			strSongs.add(s.getName());
+		}
+		return strSongs;
+	}
+
 	public List<Song> getSongs()
 	{
 		return songs;
@@ -26,5 +36,10 @@ public class Artist extends Item
 	public void removeSong(Song song)
 	{
 		songs.remove(song);
+	}
+
+	public boolean songsIsEmpty()
+	{
+		return this.songs.isEmpty();
 	}
 }

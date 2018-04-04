@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Playlist
 {
-	private List<Song> songs;
 	private String name;
+	private List<Song> songs;
 
 	public Playlist(String _name)
 	{
@@ -11,19 +11,19 @@ public class Playlist
 		this.songs = new ArrayList<Song>();
 	}
 
+	public List<String> listSongs()
+	{
+		List<String> strSongs = new ArrayList<String>();
+		for(Song s : songs)
+		{
+			strSongs.add(s.getName());
+		}
+		return strSongs;
+	}
+
 	public List<Song> getSongs()
 	{
 		return songs;
-	}
-
-	public void addSong(Song song)
-	{
-		songs.add(song);
-	}
-
-	public void removeSong(String song)
-	{
-		// implement
 	}
 
 	public Song getSong(String song)
@@ -36,6 +36,23 @@ public class Playlist
 			}
 		}
 		return null;
+	}
+
+	public void addSong(Song song)
+	{
+		songs.add(song);
+	}
+
+	public void removeSong(String song)
+	{
+		for(int i = 0; i < songs.size(); i++)
+		{
+			if(songs.get(i).getName().equals(song))
+			{
+				songs.remove(i);
+				break;
+			}
+		}
 	}
 
 	public void setName(String _name)

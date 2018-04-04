@@ -16,21 +16,6 @@ public class Account
 		this.playlists = new ArrayList<Playlist>();
 	}
 
-	public boolean isPassValid(String pass)
-	{
-		// consider storing a hash of the password instead of plaintext, then compare hashes
-		if(pass.equals(password))
-		{
-			return true;
-		}
-		return false;
-	}
-
-	public List<Playlist> getAllPlaylists()
-	{
-		return playlists;
-	}
-
 	public List<String> listPlaylists()
 	{
 		List<String> strPlaylists = new ArrayList<String>();
@@ -39,6 +24,11 @@ public class Account
 			strPlaylists.add(p.getName());
 		}
 		return strPlaylists;
+	}
+
+	public List<Playlist> getPlaylists()
+	{
+		return playlists;
 	}
 
 	public Playlist getPlaylist(String playlist)
@@ -53,10 +43,22 @@ public class Account
 		return null;
 	}
 
-	public void addPlaylist(String _name)
+	public void addPlaylist(String playlist)
 	{
-		Playlist tmp = new Playlist(_name);
+		Playlist tmp = new Playlist(playlist);
 		playlists.add(tmp);
+	}
+
+	public void removePlaylist(String playlist)
+	{
+		for(int i = 0; i < playlists.size(); i++)
+		{
+			if(playlists.get(i).getName().equals(playlist))
+			{
+				playlists.remove(i);
+				break;
+			}
+		}
 	}
 
 	public boolean getIsAdmin()
@@ -73,10 +75,22 @@ public class Account
 	{
 		return name;
 	}
+
+	public boolean isPassValid(String pass)
+	{
+		// consider storing a hash of the password instead of plaintext, then compare hashes
+		if(pass.equals(password))
+		{
+			return true;
+		}
+		return false;
+	}
 }
 
 
 /*
+additional functionality can be changing username or password
+
 this is code I wrote for if we have extra time, it is a way to hash the passwords
 
 import java.security.MessageDigest;
