@@ -9,11 +9,21 @@ public class DBManager
 		items = new ArrayList<Item>();
 	}
 
+	public List<String> listDB()
+	{
+		List<String> strDB = new ArrayList<String>();
+		for(Item item : items)
+		{
+			strDB.add(item.getName());
+		}
+		return strDB;
+	}
+
 	private Item searchExact(String search_text)
 	{
 		for (Item item : items)
 		{
-			if (item.getName() == search_text)
+			if (item.getName().equals(search_text))
 			{
 				return item;
 			}
@@ -24,32 +34,27 @@ public class DBManager
 	private Artist searchExactArtist(String search_text)
 	{
 		Item search = this.searchExact(search_text);
-		if (search instanceof Song)
+		if (search instanceof Artist)
 		{
-			// error case
+			return (Artist)search;
 		}
-		return (Artist)search;
+		return null;
 	}
 
 	private Song searchExactSong(String search_text)
 	{
 		Item search = this.searchExact(search_text);
-		if (search instanceof Artist)
+		if (search instanceof Song)
 		{
-			// error case
+			return (Song)search;
 		}
-		return (Song)search;
-	}
-
-	private void addItem(Item item)
-	{
-		items.add(item);
+		return null;
 	}
 
 	public List<Item> search(String search_text)
 	{
 		List<Item> results = new ArrayList<Item>();
-		for (Item item : this.items)
+		for (Item item : items)
 		{
 			if (item.getName().toLowerCase().contains(search_text.toLowerCase()))
 			{
@@ -59,8 +64,27 @@ public class DBManager
 		return results;
 	}
 
-	public void addSong(Song song, Account account)
+	public List<String> searchStr(String search_text)
 	{
+		List<String> results = new ArrayList<String>();
+		for (Item item : items)
+		{
+			if (item.getName().toLowerCase().contains(search_text.toLowerCase()))
+			{
+				results.add(item.getName());
+			}
+		}
+		return results;
+	}
+
+	private void addItem(Item item)
+	{
+		items.add(item);
+	}
+
+	public void addSong(Song song)
+	{
+		// Should check to see if exact song exists already, don't want duplicates
 		String artistName = song.getArtist();
 		Artist artist = this.searchExactArtist(artistName);
 		if (artist == null)
@@ -72,7 +96,9 @@ public class DBManager
 		this.addItem(song);
 	}
 
-	public void removeSong(String song_name, Account account)
+	// if we plan on having the ability for songs from different artist to have the same name
+	// we will need to change this so that deleting requires more specifics of the song
+	public void removeSong(String song_name)
 	{
 		Song song = this.searchExactSong(song_name);
 		if (song == null)
@@ -83,5 +109,9 @@ public class DBManager
 		Artist artist = this.searchExactArtist(artist_name);
 		artist.removeSong(song);
 		this.items.remove(song);
+		if(artist.songsIsEmpty())
+		{
+			this.items.remove(artist);
+		}
 	}
 }

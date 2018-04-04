@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Playlist
 {
-	private List<Song> songs;
 	private String name;
+	private List<Song> songs;
 
 	public Playlist(String _name)
 	{
@@ -11,15 +11,48 @@ public class Playlist
 		this.songs = new ArrayList<Song>();
 	}
 
+	public List<String> listSongs()
+	{
+		List<String> strSongs = new ArrayList<String>();
+		for(Song s : songs)
+		{
+			strSongs.add(s.getName());
+		}
+		return strSongs;
+	}
+
 	public List<Song> getSongs()
 	{
 		return songs;
 	}
 
+	public Song getSong(String song)
+	{
+		for(int i = 0; i < songs.size(); i++)
+		{
+			if(songs.get(i).getName().equals(song))
+			{
+				return songs.get(i);
+			}
+		}
+		return null;
+	}
+
 	public void addSong(Song song)
 	{
-		// this assumes the passed song object is good, probably want to check input before blindly adding to the List
 		songs.add(song);
+	}
+
+	public void removeSong(String song)
+	{
+		for(int i = 0; i < songs.size(); i++)
+		{
+			if(songs.get(i).getName().equals(song))
+			{
+				songs.remove(i);
+				break;
+			}
+		}
 	}
 
 	public void setName(String _name)

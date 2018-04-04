@@ -2,10 +2,10 @@ import java.util.*;
 
 public class Song extends Item
 {
-	private String genre;
-	private float duration;
 	private String artist;
+	private String genre;
 	private String album;
+	private float duration;
 
 	public Song(String _name, String _artist, String _genre, String _album, float _duration)
 	{
@@ -16,23 +16,23 @@ public class Song extends Item
 		this.duration = _duration;
 	}
 
-	public String getGenre()
-	{
-		return this.genre;
-	}
-
-	public float getDuration()
-	{
-		return this.duration;
-	}
-
 	public String getArtist()
 	{
 		return this.artist;
 	}
 
+	public String getGenre()
+	{
+		return this.genre;
+	}
+
 	public String getAlbum()
 	{
 		return this.album;
+	}
+
+	public float getDuration()
+	{
+		return this.duration;
 	}
 }
