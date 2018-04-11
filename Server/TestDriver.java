@@ -32,7 +32,8 @@ public class TestDriver
 			System.out.println(
 				"---Welcome---\n" +
 				"1: Log In\n" +
-				"2: Create New Account"
+				"2: Create New Account\n" +
+				"3. Quit"
 			);
 			int choice = input.nextInt();
 			input.nextLine();
@@ -42,11 +43,29 @@ public class TestDriver
 				// check with database, if account credentials pass then load Account object and all Playlist/Song objects by pulling info from database
 				// dont pull playlist and song data directly from database, just use the database to reference objects already in memory
 				// this is default account until I get db stuff working
-				Account user = new Account("Admin", "pass123");
-				user.setIsAdmin(true);
-				System.out.println("\nPress ctrl + c to exit");
 
-				if(user.getIsAdmin())
+				System.out.print("Enter Username: ");
+				String name = input.nextLine();
+				System.out.print("Enter Password: ");
+				String pass = input.nextLine();
+
+				Account userTemp = db.getAccount(name);
+				Account user;
+				if (userTemp != null && userTemp.isPassValid(pass))
+				{
+					user = userTemp;
+				}
+				else
+				{
+					System.out.print("Invalid Login\n");
+					user = null;
+				}
+
+				//Account user = new Account("Admin", "pass123");
+				//user.setIsAdmin(true);
+				//System.out.println("\nPress ctrl + c to exit");
+
+				if(user != null)
 				{
 					while(true)
 					{
@@ -58,11 +77,12 @@ public class TestDriver
 							"3: Create Playlist\n" +
 							"4: Remove Playlist\n" +
 							"5: Search For Songs or Artists\n" +
+							"6: Log Out\n" +
 							// this line separates normal from admin functions
 							"------------------------------\n" +
-							"6: Add Song to DB\n" +
-							"7: Remove Song from DB\n" +
-							"8: Set Account to Admin"
+							"7: Add Song to DB\n" +
+							"8: Remove Song from DB\n" +
+							"9: Set Account to Admin"
 						);
 						int choice2 = input.nextInt();
 						input.nextLine();
@@ -307,6 +327,11 @@ public class TestDriver
 
 						else if(choice2 == 6)
 						{
+							break;
+						}
+
+						else if(choice2 == 7)
+						{
 							boolean contRun = true;
 							while(contRun)
 							{
@@ -364,7 +389,7 @@ public class TestDriver
 							}
 						}
 
-						else if(choice2 == 7)
+						else if(choice2 == 8)
 						{
 							System.out.print("Enter Name of Song to Remove: ");
 							String title = input.nextLine();
@@ -372,31 +397,11 @@ public class TestDriver
 							System.out.println("\nRemoved Song From DB");
 						}
 
-						else if(choice2 == 8)
+						else if(choice2 == 9)
 						{
 							System.out.println("\nThis will directly affect the database. Account objects are not stored in DBManager class");
 						}
 					}
-				}
-
-				else
-				{
-					System.out.println("This is normal user menu, just a subset of the admin functionality");
-					/*
-					while(true)
-					{
-						System.out.println(
-							"---Welcome " + user.getName() + "---\n" +
-							"1: List Playlists\n" +
-							"2: Select Playlist\n" +
-							"3: Create Playlist\n" +
-							"4: Remove Playlist\n" +
-							"5: Search For Songs or Artists"
-						);
-						int choice2 = input.nextInt();
-						input.nextLine();
-					}
-					*/
 				}
 			}
 
@@ -415,6 +420,11 @@ public class TestDriver
 				{
 					System.out.println("\nAccount Name ALready Exists, Can't Create Account\n\n");
 				}
+			}
+
+			else if(choice == 3)
+			{
+				break;
 			}
 		}
 	}
