@@ -9,6 +9,11 @@ public class TestDriver
 		// at beginning of main execution, load all song and artist objects from database into server memory
 		DBManager db = new DBManager();
 
+		// create a hard coded admin account (temporary untill proper admin account creation is implemented)
+		Account accTemp = new Account("admin", "pass");
+		accTemp.setIsAdmin(true);
+		db.addAccount(accTemp);
+
 		/*
 		List of function in DBManager
 		List<String> listDB()
@@ -402,7 +407,14 @@ public class TestDriver
 				String name = input.nextLine();
 				System.out.print("Enter Password: ");
 				String pass = input.nextLine();
-				System.out.println("\nAccount Has Been Created, Try Logging In\n\n");
+				if (db.addAccount(new Account(name, pass)))
+				{
+					System.out.println("\nAccount Has Been Created, Try Logging In\n\n");
+				}
+				else
+				{
+					System.out.println("\nAccount Name ALready Exists, Can't Create Account\n\n");
+				}
 			}
 		}
 	}

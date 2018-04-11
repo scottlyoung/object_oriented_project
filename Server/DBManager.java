@@ -3,10 +3,12 @@ import java.util.*;
 public class DBManager
 {
 	private List<Item> items;
+	private List<Account> accounts;
 
 	public DBManager()
 	{
 		items = new ArrayList<Item>();
+		accounts = new ArrayList<Account>();
 	}
 
 	public List<String> listDB()
@@ -113,5 +115,27 @@ public class DBManager
 		{
 			this.items.remove(artist);
 		}
+	}
+
+	public Boolean addAccount(Account account_)
+	{
+		if (this.getAccount(account_.getName()) == null)
+		{
+			this.accounts.add(account_);
+			return true;
+		}
+		return false;
+	}
+
+	public Account getAccount(String name)
+	{
+		for (Account a : this.accounts)
+		{
+			if (a.getName().equals(name))
+			{
+				return a;
+			}
+		}
+		return null;
 	}
 }

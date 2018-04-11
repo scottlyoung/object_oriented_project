@@ -73,7 +73,7 @@ public class Account
 
 	public String getName()
 	{
-		return name;
+		return this.name;
 	}
 
 	public boolean isPassValid(String pass)
