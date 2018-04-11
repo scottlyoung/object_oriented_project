@@ -7,6 +7,8 @@ import javax.sound.sampled.*;
 
 public class Player
 {
+	private static Player instance = null;
+
 	private String currentSong;
 	private Song nextSong;
 	private Playlist currentPlaylist;
@@ -18,9 +20,16 @@ public class Player
 	private AudioInputStream audioInputStream;
 	private File songFile;
 
-	public Player()
+	private Player()
 	{
+		instance = this;
+	}
 
+	public static Player getPlayer() {
+		if (instance == null) {
+			instance = new Player();
+		}
+		return instance;
 	}
 
 	public void playPlaylist(Playlist playlist)
@@ -96,7 +105,7 @@ public class Player
 		}
 	}
 
-	public void resumeSong()
+	void resumeSong()
 	{
 		if (playStatus == "playing")
 		{

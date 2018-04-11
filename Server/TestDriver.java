@@ -10,7 +10,7 @@ public class TestDriver
 		DBManager db = new DBManager();
 
 		// initialize player here
-		Player player = new Player();
+		Player player = Player.getPlayer();
 
 		// create a hard coded admin account (temporary untill proper admin account creation is implemented)
 		Account accTemp = new Account("admin", "pass");
@@ -234,9 +234,9 @@ public class TestDriver
 													"---Song Menu---\n" +
 													"1: Play Song\n" +
 													"2: Pause Song\n" +
-													"4: Display Song Details\n" +
-													"5: Add Song to Playlist\n" +
-													"6: Exit"
+													"3: Display Song Details\n" +
+													"4: Add Song to Playlist\n" +
+													"5: Exit"
 												);
 												int choice4 = input.nextInt();
 												input.nextLine();
