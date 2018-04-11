@@ -7,15 +7,16 @@ import javax.sound.sampled.*;
 
 public class Player
 {
-	private Song currentSong;
+	private String currentSong;
 	private Song nextSong;
 	private Playlist currentPlaylist;
 	private int positionInPlaylist = 0;
 
 	private String playStatus = "paused";
-  private Clip clip;
-  private AudioInputStream audioInputStream;
-  private File songFile;
+	private Long currentFrame;
+	private Clip clip;
+	private AudioInputStream audioInputStream;
+	private File songFile;
 
 	public Player()
 	{
@@ -23,38 +24,76 @@ public class Player
 	}
 
 	public void playPlaylist(Playlist playlist)
+		
 	{
 		currentPlaylist = playlist;
 		positionInPlaylist = 0;
 		playPlaylistSong();
 	}
 
-	void playPlaylistSong()
+	public void playPlaylist(Playlist playlist, int index)
+		
 	{
-		//--commenting line below out because doesn't compile as is
-		//playSong(currentPlaylist.getSongs()[positionInPlaylist]);
+		currentPlaylist = playlist;
+		playPlaylistSong(index);
 	}
 
-	public void playNewSong(Song song)
-		throws UnsupportedAudioFileException,
-        IOException, LineUnavailableException
+	void playPlaylistSong()
+		
+	{
+		//--commenting line below out because doesn't compile as is
+		List<Song> playlistSongs = currentPlaylist.getSongs();
+
+		if (positionInPlaylist < 0 || positionInPlaylist >= playlistSongs.size()) {
+			System.out.println("Invalid position in playlist.");
+			return;
+		}
+
+		playSong(playlistSongs.get(positionInPlaylist));
+	}
+
+	void playPlaylistSong(int index)
+		
+	{
+		List<Song> playlistSongs = currentPlaylist.getSongs();
+
+		if (index < 0 || index >= playlistSongs.size()) {
+			System.out.println("Invalid index in playlist. Defaulting to 0");
+			positionInPlaylist = 0;
+		}
+		else 
+		{
+			positionInPlaylist = index;
+		}
+		playPlaylistSong();
+	}
+
+	public void playSong(Song song)
+		
 	{
 		if (playStatus == "playing")
 		{
 			pauseSong();
+			clip.close();
 		}
 
-		//--Intended implementation below
-		//audioInputStream = AudioSystem.getAudioInputStream(song.getFile());
-		//--Temporary implementation
-		audioInputStream = AudioSystem.getAudioInputStream(new File("test_audio.wav").getAbsoluteFile());
-		clip = AudioSystem.getClip();
-		clip.open(audioInputStream);
+		if (song.getName() == currentSong) {
+			resumeSong();
+			return;
+		}
 
-		resumeSong();
-
-		//We need a way to tell when a song ends, maybe put the play method in the Song class and use observer
-		//pattern to tell when it finishes? Then this method would be used to subscribe to the song object
+		try {
+			System.out.println("Loading " + "audio_files/" + song.getFileName());
+    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio_files/" + song.getFileName()).getAbsoluteFile());
+    		clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			currentSong = song.getName();
+			resumeSong();
+		} catch (Exception e) {
+    		System.out.println("Audio File not valid");
+    		e.printStackTrace();
+    		return;
+		}
 	}
 
 	public void resumeSong()
@@ -66,6 +105,7 @@ public class Player
 		}
 
 		//Currently just restarts song, will have to implement timeframe tracking later
+		//jumpToFrame(currentFrame);
 		clip.start();
 		playStatus = "playing";
 	}
@@ -76,11 +116,21 @@ public class Player
 			System.out.println("Audio already paused...");
 			return;
 		}
+		currentFrame = clip.getMicrosecondPosition();
 		clip.stop();
 		playStatus = "paused";
 	}
 
+	public void jumpToFrame(Long frame) 
+	{
+		if (frame <= 0 || frame >= clip.getMicrosecondLength()) 
+			return;
+		
+		clip.setMicrosecondPosition(frame);
+	}
+
 	public void skipForward()
+		
 	{
 		if (positionInPlaylist >= currentPlaylist.getSongs().size() - 1)
 		{
@@ -93,6 +143,7 @@ public class Player
 	}
 
 	public void skipBackward()
+		
 	{
 		if (positionInPlaylist <= 0)
 		{

@@ -9,6 +9,9 @@ public class TestDriver
 		// at beginning of main execution, load all song and artist objects from database into server memory
 		DBManager db = new DBManager();
 
+		// initialize player here
+		Player player = new Player();
+
 		// create a hard coded admin account (temporary untill proper admin account creation is implemented)
 		Account accTemp = new Account("admin", "pass");
 		accTemp.setIsAdmin(true);
@@ -125,11 +128,16 @@ public class TestDriver
 									}
 									else if(choice3 == 2)
 									{
-										System.out.println("\nInvoke player here");
+										//System.out.println("\nInvoke player here");
+										player.playPlaylist(currPlaylist);
 									}
 									else if(choice3 == 3)
 									{
-										System.out.println("\nInvoke player here");
+										//System.out.println("\nInvoke player here");
+										System.out.println("Enter song index in playlist: ");
+										int indexChoice = input.nextInt();
+										input.nextLine();
+										player.playPlaylist(currPlaylist, indexChoice);
 									}
 									else if(choice3 == 4)
 									{
@@ -225,18 +233,23 @@ public class TestDriver
 												System.out.println(
 													"---Song Menu---\n" +
 													"1: Play Song\n" +
-													"2: Display Song Details\n" +
-													"3: Add Song to Playlist\n" +
-													"4: Exit"
+													"2: Pause Song\n" +
+													"4: Display Song Details\n" +
+													"5: Add Song to Playlist\n" +
+													"6: Exit"
 												);
 												int choice4 = input.nextInt();
 												input.nextLine();
 
 												if(choice4 == 1)
 												{
-													System.out.println("\nInvoke Player Here");
+													player.playSong(tmpSong);
 												}
-												else if(choice4 == 2)
+												else if (choice4 == 2)
+												{
+													player.pauseSong();
+												}
+												else if(choice4 == 3)
 												{
 													System.out.println(
 													"\nTitle: " + tmpSong.getName() +
@@ -246,7 +259,7 @@ public class TestDriver
 													"\nDuration: " + tmpSong.getDuration() + " seconds"
 													);
 												}
-												else if(choice4 == 3)
+												else if(choice4 == 4)
 												{
 													int index = 0;
 													for(String playlistIndex : user.listPlaylists())
@@ -272,7 +285,7 @@ public class TestDriver
 													playlistChoice.addSong(tmpSong);
 													System.out.println("\nAdded Song to Playlist");
 												}
-												else if(choice4 == 4)
+												else if(choice4 == 5)
 												{
 													System.out.println("\nGoing Back To Search Menu");
 													contRun2 = false;
@@ -303,6 +316,7 @@ public class TestDriver
 												else if(choice4 == 2)
 												{
 													System.out.println("\nInvoke Player Here");
+
 												}
 												else if(choice4 == 3)
 												{
@@ -370,6 +384,7 @@ public class TestDriver
 									Song f = new Song("Whos Crying Now", "Journey", "80's Rock", "Escape", 250);
 									Song g = new Song("Smooth", "Santana", "Classic Rock", "Supernatural", 250);
 									Song h = new Song("Who Are You", "The Who", "Classic Rock", "Who Are You", 250);
+									Song i = new Song("Danger Zone", "Kenny Rogers", "Classic Rock", "Danger Zone", 250, "test_song.wav");
 									db.addSong(a);
 									db.addSong(b);
 									db.addSong(c);
@@ -378,6 +393,8 @@ public class TestDriver
 									db.addSong(f);
 									db.addSong(g);
 									db.addSong(h);
+									db.addSong(i);
+									System.out.println("\nAdded song: " + i.getName());
 									System.out.println("\nAdded Precoded Songs");
 									contRun = false;
 								}
