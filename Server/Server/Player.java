@@ -1,7 +1,7 @@
+package Server;
+
 import java.util.*;
 import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
 
 import javax.sound.sampled.*;
 
