@@ -52,4 +52,9 @@ public class Song extends Item
 	{
 		return this.fileName;
 	}
+
+	@Override
+	public String toString() {
+		return super.getName()+"\n"+getArtist()+"\n"+getAlbum()+", "+getGenre()+", "+ getDuration();
+	}
 }
