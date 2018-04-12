@@ -1,6 +1,6 @@
 package client;
 
-import server.item;
+import Server.*;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
