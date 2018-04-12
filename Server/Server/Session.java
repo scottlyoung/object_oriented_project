@@ -1,4 +1,5 @@
-import java.util.*;
+package Server;
+
 import java.net.*;
 import java.io.*;
 
@@ -8,7 +9,7 @@ public class Session extends Thread
 
 	public Session(int port) throws IOException 
 	{
-		System.out.println("New Session\n");
+		System.out.println("New Server.Session\n");
 		serverSocket = new ServerSocket(port);
 		serverSocket.setSoTimeout(10000);
 	}

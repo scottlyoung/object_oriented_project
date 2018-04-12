@@ -1,3 +1,5 @@
+package Server;
+
 import java.util.*;
 
 public class TestDriver
@@ -18,15 +20,15 @@ public class TestDriver
 		db.addAccount(accTemp);
 
 		/*
-		List of function in DBManager
+		List of function in Server.DBManager
 		List<String> listDB()
-		Item searchExact(String)
-		Artist searchExactArtist(String)
-		Song searchExactSong(String)
-		List<Item> search(String)
+		Server.Item searchExact(String)
+		Server.Artist searchExactArtist(String)
+		Server.Song searchExactSong(String)
+		List<Server.Item> search(String)
 		List<String> searchStr(String)
-		void addItem(Item)
-		void addSong(Song)
+		void addItem(Server.Item)
+		void addSong(Server.Song)
 		void removeSong(String)
 		*/
 
@@ -35,7 +37,7 @@ public class TestDriver
 			System.out.println(
 				"---Welcome---\n" +
 				"1: Log In\n" +
-				"2: Create New Account\n" +
+				"2: Create New Server.Account\n" +
 				"3. Quit"
 			);
 			int choice = input.nextInt();
@@ -43,7 +45,7 @@ public class TestDriver
 
 			if(choice == 1)
 			{
-				// check with database, if account credentials pass then load Account object and all Playlist/Song objects by pulling info from database
+				// check with database, if account credentials pass then load Server.Account object and all Server.Playlist/Server.Song objects by pulling info from database
 				// dont pull playlist and song data directly from database, just use the database to reference objects already in memory
 				// this is default account until I get db stuff working
 
@@ -64,7 +66,7 @@ public class TestDriver
 					user = null;
 				}
 
-				//Account user = new Account("Admin", "pass123");
+				//Server.Account user = new Server.Account("Admin", "pass123");
 				//user.setIsAdmin(true);
 				//System.out.println("\nPress ctrl + c to exit");
 
@@ -76,16 +78,16 @@ public class TestDriver
 						System.out.println(
 							"---Welcome " + user.getName() + "---\n" +
 							"1: List Playlists\n" +
-							"2: Select Playlist\n" +
-							"3: Create Playlist\n" +
-							"4: Remove Playlist\n" +
+							"2: Select Server.Playlist\n" +
+							"3: Create Server.Playlist\n" +
+							"4: Remove Server.Playlist\n" +
 							"5: Search For Songs or Artists\n" +
 							"6: Log Out\n" +
 							// this line separates normal from admin functions
 							"------------------------------\n" +
-							"7: Add Song to DB\n" +
-							"8: Remove Song from DB\n" +
-							"9: Set Account to Admin"
+							"7: Add Server.Song to DB\n" +
+							"8: Remove Server.Song from DB\n" +
+							"9: Set Server.Account to Admin"
 						);
 						int choice2 = input.nextInt();
 						input.nextLine();
@@ -97,12 +99,12 @@ public class TestDriver
 
 						else if(choice2 == 2)
 						{
-							System.out.print("Enter Name of Playlist: ");
+							System.out.print("Enter Name of Server.Playlist: ");
 							String playlistName = input.nextLine();
 							Playlist currPlaylist = user.getPlaylist(playlistName);
 							if(currPlaylist == null)
 							{
-								System.out.println("\nPlaylist Not Found");
+								System.out.println("\nServer.Playlist Not Found");
 							}
 							else
 							{
@@ -111,12 +113,12 @@ public class TestDriver
 								{
 									System.out.println("\n\n\n");
 									System.out.println(
-										"---" + currPlaylist.getName() + " Playlist Menu---\n" +
+										"---" + currPlaylist.getName() + " Server.Playlist Menu---\n" +
 										"1: List Songs\n" +
-										"2: Play Playlist\n" +
-										"3: Play Song (from playlist)\n" +
-										"4: Remove Song\n" +
-										"5: Rename Playlist\n" +
+										"2: Play Server.Playlist\n" +
+										"3: Play Server.Song (from playlist)\n" +
+										"4: Remove Server.Song\n" +
+										"5: Rename Server.Playlist\n" +
 										"6: Exit"
 									);
 									int choice3 = input.nextInt();
@@ -141,23 +143,23 @@ public class TestDriver
 									}
 									else if(choice3 == 4)
 									{
-										System.out.print("Enter Name of Song to Remove: ");
+										System.out.print("Enter Name of Server.Song to Remove: ");
 										String songName = input.nextLine();
 										currPlaylist.removeSong(songName);
 										// update database info
-										System.out.println("\nRemoved Song (Void function so cant check for success)");
+										System.out.println("\nRemoved Server.Song (Void function so cant check for success)");
 									}
 									else if(choice3 == 5)
 									{
-										System.out.print("Enter New Playlist Name: ");
+										System.out.print("Enter New Server.Playlist Name: ");
 										String newName = input.nextLine();
 										currPlaylist.setName(newName);
 										// update database info
-										System.out.println("\nChanged Playlist Name");
+										System.out.println("\nChanged Server.Playlist Name");
 									}
 									else if(choice3 == 6)
 									{
-										System.out.println("\nExiting Playlist Menu");
+										System.out.println("\nExiting Server.Playlist Menu");
 										contRun = false;
 									}
 								}
@@ -166,20 +168,20 @@ public class TestDriver
 
 						else if(choice2 == 3)
 						{
-							System.out.print("Enter Name of New Playlist: ");
+							System.out.print("Enter Name of New Server.Playlist: ");
 							String playlistName = input.nextLine();
 							user.addPlaylist(playlistName);
 							// update database info
-							System.out.println("\nAdded New Playlist");
+							System.out.println("\nAdded New Server.Playlist");
 						}
 
 						else if(choice2 == 4)
 						{
-							System.out.print("Enter Name of Playlist to Remove: ");
+							System.out.print("Enter Name of Server.Playlist to Remove: ");
 							String playlistName = input.nextLine();
 							user.removePlaylist(playlistName);
 							// update database info
-							System.out.println("\nRemoved Playlist (Void function so cant check for success)");
+							System.out.println("\nRemoved Server.Playlist (Void function so cant check for success)");
 						}
 
 						else if(choice2 == 5)
@@ -196,7 +198,7 @@ public class TestDriver
 								System.out.println("\n\n\n");
 								System.out.println(
 									"---Search Menu---\n" +
-									"1: Select Song or Artist\n" +
+									"1: Select Server.Song or Server.Artist\n" +
 									"2: Exit"
 								);
 								int choice3 = input.nextInt();
@@ -231,11 +233,11 @@ public class TestDriver
 											{
 												System.out.println("\n\n\n");
 												System.out.println(
-													"---Song Menu---\n" +
-													"1: Play Song\n" +
-													"2: Pause Song\n" +
-													"3: Display Song Details\n" +
-													"4: Add Song to Playlist\n" +
+													"---Server.Song Menu---\n" +
+													"1: Play Server.Song\n" +
+													"2: Pause Server.Song\n" +
+													"3: Display Server.Song Details\n" +
+													"4: Add Server.Song to Server.Playlist\n" +
 													"5: Exit"
 												);
 												int choice4 = input.nextInt();
@@ -253,7 +255,7 @@ public class TestDriver
 												{
 													System.out.println(
 													"\nTitle: " + tmpSong.getName() +
-													"\nArtist: " + tmpSong.getArtist() +
+													"\nServer.Artist: " + tmpSong.getArtist() +
 													"\nGenre: " + tmpSong.getGenre() +
 													"\nAlbum: " + tmpSong.getAlbum() +
 													"\nDuration: " + tmpSong.getDuration() + " seconds"
@@ -267,7 +269,7 @@ public class TestDriver
 														System.out.println(index++ + ": " + playlistIndex);
 													}
 
-													System.out.print("\nWhich Playlist Would You Like To Add To: ");
+													System.out.print("\nWhich Server.Playlist Would You Like To Add To: ");
 													int choice5 = input.nextInt();
 													input.nextLine();
 
@@ -283,7 +285,7 @@ public class TestDriver
 													}
 
 													playlistChoice.addSong(tmpSong);
-													System.out.println("\nAdded Song to Playlist");
+													System.out.println("\nAdded Server.Song to Server.Playlist");
 												}
 												else if(choice4 == 5)
 												{
@@ -300,9 +302,9 @@ public class TestDriver
 											{
 												System.out.println("\n\n\n");
 												System.out.println(
-													"---Artist Menu---\n" +
+													"---Server.Artist Menu---\n" +
 													"1: Display Songs\n" +
-													"2: Play Song\n" +
+													"2: Play Server.Song\n" +
 													"3: Play All Songs\n" +
 													"4: Exit"
 												);
@@ -315,12 +317,12 @@ public class TestDriver
 												}
 												else if(choice4 == 2)
 												{
-													System.out.println("\nInvoke Player Here");
+													System.out.println("\nInvoke Server.Player Here");
 
 												}
 												else if(choice4 == 3)
 												{
-													System.out.println("\nInvoke Player Here");
+													System.out.println("\nInvoke Server.Player Here");
 												}
 												else if(choice4 == 4)
 												{
@@ -352,7 +354,7 @@ public class TestDriver
 								System.out.println("\n\n\n");
 								System.out.println(
 									"---Add Songs Menu---\n" +
-									"1: Manually Add A Song\n" +
+									"1: Manually Add A Server.Song\n" +
 									"2: Add Hardcoded Songs (For Testing)\n" +
 									"3: Exit"
 								);
@@ -363,7 +365,7 @@ public class TestDriver
 								{
 									System.out.print("Enter Title: ");
 									String title = input.nextLine();
-									System.out.print("Enter Artist: ");
+									System.out.print("Enter Server.Artist: ");
 									String artist = input.nextLine();
 									System.out.print("Enter Genre: ");
 									String genre = input.nextLine();
@@ -371,7 +373,7 @@ public class TestDriver
 									String album = input.nextLine();
 									Song a = new Song(title, artist, genre, album, 250);
 									db.addSong(a);
-									System.out.println("\nAdded Song To DB");
+									System.out.println("\nAdded Server.Song To DB");
 									contRun = false;
 								}
 								else if(choice3 == 2)
@@ -408,15 +410,15 @@ public class TestDriver
 
 						else if(choice2 == 8)
 						{
-							System.out.print("Enter Name of Song to Remove: ");
+							System.out.print("Enter Name of Server.Song to Remove: ");
 							String title = input.nextLine();
 							db.removeSong(title);
-							System.out.println("\nRemoved Song From DB");
+							System.out.println("\nRemoved Server.Song From DB");
 						}
 
 						else if(choice2 == 9)
 						{
-							System.out.println("\nThis will directly affect the database. Account objects are not stored in DBManager class");
+							System.out.println("\nThis will directly affect the database. Server.Account objects are not stored in Server.DBManager class");
 						}
 					}
 				}
@@ -431,11 +433,11 @@ public class TestDriver
 				String pass = input.nextLine();
 				if (db.addAccount(new Account(name, pass)))
 				{
-					System.out.println("\nAccount Has Been Created, Try Logging In\n\n");
+					System.out.println("\nServer.Account Has Been Created, Try Logging In\n\n");
 				}
 				else
 				{
-					System.out.println("\nAccount Name ALready Exists, Can't Create Account\n\n");
+					System.out.println("\nServer.Account Name ALready Exists, Can't Create Server.Account\n\n");
 				}
 			}
 

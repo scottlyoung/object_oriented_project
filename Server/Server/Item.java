@@ -1,3 +1,5 @@
+package Server;
+
 public abstract class Item
 {
 	private String name;
@@ -10,5 +12,9 @@ public abstract class Item
 	public String getName()
 	{
 		return name;
+	}
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

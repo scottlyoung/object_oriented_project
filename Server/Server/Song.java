@@ -1,4 +1,4 @@
-import java.util.*;
+package Server;
 
 public class Song extends Item
 {
@@ -51,5 +51,10 @@ public class Song extends Item
 	public String getFileName()
 	{
 		return this.fileName;
+	}
+
+	@Override
+	public String toString() {
+		return super.getName()+"\n"+getArtist()+"\n"+getAlbum()+", "+getGenre()+", "+ getDuration();
 	}
 }
