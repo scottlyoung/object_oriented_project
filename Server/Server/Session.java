@@ -3,7 +3,7 @@ package Server;
 import java.net.*;
 import java.io.*;
 
-public class Session extends Thread 
+public class Session extends Thread
 {
 	private ServerSocket serverSocket;
 
@@ -20,19 +20,22 @@ public class Session extends Thread
 		{
 			try 
 			{
-				System.out.println("Waiting for client on port " + 
-				serverSocket.getLocalPort() + "...");
+				DBManager db = new DBManager();
+				System.out.println((int)db);
+				System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
+				DataOutputStream out = new DataOutputStream(server.getOutputStream());
+				DataInputStream in = new DataInputStream(server.getInputStream());
+
+				out.writeUTF("o" + db.toString());
 
 				System.out.println("Just connected to " + server.getRemoteSocketAddress());
 				while(true)
 				{
-					DataInputStream in = new DataInputStream(server.getInputStream());
 					String inputString = in.readUTF();
 					System.out.println(inputString);
-					DataOutputStream out = new DataOutputStream(server.getOutputStream());
 					out.writeUTF("Thank you for the message.");
-					if (inputString.equals("quit"))
+					if (inputString.equals("q"))
 					{
 						break;
 					}
