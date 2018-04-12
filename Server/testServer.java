@@ -31,7 +31,7 @@ public class testServer extends Thread
 					System.out.println(inputString);
 					DataOutputStream out = new DataOutputStream(server.getOutputStream());
 					out.writeUTF("Thank you for the message.");
-					if (inputString.equals("quit"))
+					if (inputString.equals("q"))
 					{
 						break;
 					}
