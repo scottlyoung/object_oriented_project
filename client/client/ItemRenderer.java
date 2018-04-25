@@ -1,5 +1,5 @@
 package client;
-import server.Item;
+import Server.Item;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

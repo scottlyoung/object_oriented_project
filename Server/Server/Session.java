@@ -21,7 +21,7 @@ public class Session extends Thread
 			try 
 			{
 				DBManager db = new DBManager();
-				System.out.println((int)db);
+				//System.out.println((int)db);
 				System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
 				DataOutputStream out = new DataOutputStream(server.getOutputStream());

@@ -7,7 +7,7 @@ public class Session
 	private DataOutputStream out;
 	private Socket client;
 
-	public String Session(String serverName, Integer port)
+	public Session(String serverName, Integer port)
 	{
 		try
 		{
@@ -25,7 +25,6 @@ public class Session
 		{
 			e.printStackTrace();
 		}
-		return null;
 	}
 
 	public void LogOut()
