@@ -11,24 +11,32 @@ public class App extends JFrame{
     private JTextField usernameField;
     private JTextField passwordField;
     public App(){
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+
+
 
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String password = passwordField.getText();
+                System.out.println(username);
                 //TODO pass username & password to DBManger
+                if(username.compareToIgnoreCase("admin")==0) {
+                    goToUploadView();
+                }
+                else{
                     goToHome();
+                }
             }
         });
-
-
 
         signupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String password = passwordField.getText();
+                System.out.println(username);
                 // TODO pass username & password to DBManger
-                goToHome();
             }
         });
 
@@ -41,6 +49,11 @@ public class App extends JFrame{
         Home home = new Home();
         this.setVisible(false);
         home.setVisible(true);
+    }
+    private void goToUploadView(){
+        UploadController uploadController = new UploadController();
+        this.setVisible(false);
+        uploadController.setVisible(true);
     }
 
 
