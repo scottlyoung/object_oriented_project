@@ -1,9 +1,6 @@
 package client;
 
-import Server.Artist;
-import Server.DBManager;
-import Server.Item;
-import Server.Song;
+import Server.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,37 +13,69 @@ public class Home extends JFrame{
     private JPanel panel;
     private JTextField searchField;
     private JButton button1;
+    private JPanel createPlaylistPanel;
+    private JTextField newPlaylistTextField;
+    private JButton createPlaylistButton;
+    private PlaylistPlayer playlistPanel ;
 
-    public Home(){
+    public Home(Account currentUser){
         this.getContentPane().add(panel,BorderLayout.NORTH);
         this.pack();
         this.setVisible(true);
         setBounds(100, 100, 778, 426);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().add(new PlaylistPlayer(),  BorderLayout.CENTER);
+
+        /** Create a new playlist Panel **/
+        createPlaylistPanel = new JPanel();
+        createPlaylistPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+        JLabel newPlaylistLabel = new JLabel("Enter Playlist Name");
+        newPlaylistTextField = new JTextField(30);
+
+        createPlaylistButton = new JButton("New Playlist");
+        createPlaylistButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createPlaylist(newPlaylistTextField.getText(),currentUser);
+            }
+        });
+
+        createPlaylistPanel.add(newPlaylistLabel);
+        createPlaylistPanel.add(newPlaylistTextField);
+        createPlaylistPanel.add(createPlaylistButton);
+
+        this.getContentPane().add(createPlaylistPanel,  BorderLayout.SOUTH);
+
+
+        playlistPanel = new PlaylistPlayer(currentUser);
+        this.getContentPane().add(  playlistPanel,BorderLayout.CENTER);
         button1.setSize(100,100);
 
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Item> results = new DBManager().search(searchField.getText());
-                if(!results.isEmpty()){
+                List<Item> results = DBManager.getInstance().search(searchField.getText());
+                if(results.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No Results Found");
                 }
                 else{
-                    Artist artist = new Artist("X Ambassadors");
-                    Song song1 = new Song("Renegades", "X Ambassadors", "Indie", "VHS", 195);
-                    results.add(artist);
-                    artist.addSong(song1);
-                    results.add(song1);
-                    results.add(new Song("Say you won't let go", "James Arthur", "Pop", "Back from the Edge", 195));
-                    showSearchResults(results);
+                    showSearchResults(results, currentUser);
                 }
             }
         });
     }
-    private void  showSearchResults(List<Item> results){
-        SearchResults searchResults = new SearchResults(results);
+    private void  showSearchResults(List<Item> results, Account currentUser){
+        SearchResults searchResults = new SearchResults(results, currentUser);
         searchResults.setVisible(true);
     }
+    private void createPlaylist(String title, Account currentUser){
+        currentUser.addPlaylist(title);
+        System.out.print(currentUser.getPlaylists().size());
+        this.getContentPane().remove(playlistPanel );
+        playlistPanel = new PlaylistPlayer(currentUser);
+        this.getContentPane().add(playlistPanel,BorderLayout.CENTER);
+        this.getContentPane().validate();
+        this.getContentPane().repaint();
+    }
+
 }

@@ -1,5 +1,6 @@
 package client;
 
+import Server.Account;
 import Server.Artist;
 import Server.Item;
 import Server.Song;
@@ -16,29 +17,30 @@ public class SearchResults extends JFrame {
      * Launch the application.
      */
     public static void main(String[] args) {
-        List<Item> results = new ArrayList<Item>();
-        Artist artist = new Artist("X Ambassadors");
-        Song song1 = new Song("Renegades", "X Ambassadors", "Indie", "VHS", 195);
-        results.add(artist);
-        artist.addSong(song1);
-        results.add(song1);
-        results.add(new Song("Say you won't let go", "James Arthur", "Pop", "Back from the Edge", 195));
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    SearchResults frame = new SearchResults(results);
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//
+//        List<Item> results = new ArrayList<Item>();
+//        Artist artist = new Artist("X Ambassadors");
+//        Song song1 = new Song("Renegades", "X Ambassadors", "Indie", "VHS", 195);
+//        results.add(artist);
+//        artist.addSong(song1);
+//        results.add(song1);
+//        results.add(new Song("Say you won't let go", "James Arthur", "Pop", "Back from the Edge", 195));
+//        EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//                    SearchResults frame = new SearchResults(results);
+//                    frame.setVisible(true);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     /**
      * Create the frame.
      */
-    public SearchResults(List<Item> items) {
+    public SearchResults(List<Item> items, Account currentUser) {
         this.setTitle("Search Results");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 778, 426);
@@ -82,11 +84,11 @@ public class SearchResults extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (item instanceof Song){
-                        PlaylistController playlistController = new PlaylistController((Song) item);
+                        PlaylistController playlistController = new PlaylistController((Song) item, currentUser);
                         playlistController.setVisible(true);
                     }
                     else {
-                        ArtistController artistController = new ArtistController((Artist) item);
+                        ArtistController artistController = new ArtistController((Artist) item, currentUser);
                         artistController.setVisible(true);
                     }
                     closeWindow();

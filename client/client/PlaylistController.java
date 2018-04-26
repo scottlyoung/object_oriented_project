@@ -1,8 +1,6 @@
 package client;
 
-import Server.Item;
-import Server.Playlist;
-import Server.Song;
+import Server.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +12,10 @@ import java.util.List;
 // this class manages adding a song to a list
 public class PlaylistController  extends JFrame {
 
-    public PlaylistController(Song item){
-       //TODO Call DBManager to get playlists for the current user
-        List<Playlist> playlists = new ArrayList<Playlist>();
-        playlists.add( new Playlist("Mood Booster"));
-        playlists.add( new Playlist("Workout"));
-        System.out.println(item.toString());
+    public PlaylistController(Song item, Account currentUser){
+
+        List<Playlist> playlists = currentUser.getPlaylists();
+
         this.setTitle("Add To Playlist");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 778, 426);
@@ -55,11 +51,16 @@ public class PlaylistController  extends JFrame {
             button.addActionListener( new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                         playlists.get(listId).addSong( item);
+                        goToHome(currentUser);
 
                 }
             });
         }
+    }
+    private void goToHome(Account currentUser){
+        Home home = new Home(currentUser);
+        this.setVisible(false);
+        home.setVisible(true);
     }
 }
