@@ -93,8 +93,12 @@ public class Player
 
 		try {
 			System.out.println("Loading " + "audio_files/" + song.getFileName());
-    		audioInputStream = AudioSystem.getAudioInputStream(new File("audio_files/" + song.getFileName()).getAbsoluteFile());
-    		clip = AudioSystem.getClip();
+			File audio = new File("audio_files/" + song.getFileName()).getAbsoluteFile();
+    		audioInputStream = AudioSystem.getAudioInputStream(audio);
+    		AudioFormat format = audioInputStream.getFormat();
+    		DataLine.Info info = new DataLine.Info(Clip.class, format);
+			clip = (Clip)AudioSystem.getLine(info);
+    		//clip = AudioSystem.getClip(null);
 			clip.open(audioInputStream);
 			currentSong = song.getName();
 			resumeSong();
