@@ -9,7 +9,7 @@ public class TestDriver
 	public static void main(String[] args)
 	{
 		// at beginning of main execution, load all song and artist objects from database into server memory
-		DBManager db = new DBManager();
+		DBManager db = DBManager.getInstance();
 
 		// initialize player here
 		Player player = Player.getPlayer();

@@ -6,11 +6,18 @@ public class DBManager
 {
 	private List<Item> items;
 	private List<Account> accounts;
+	private static DBManager instance = null;
 
-	public DBManager()
+	private DBManager()
 	{
 		items = new ArrayList<Item>();
 		accounts = new ArrayList<Account>();
+	}
+	public static DBManager getInstance() {
+		if (instance == null) {
+			instance = new DBManager();
+		}
+		return instance;
 	}
 
 	public List<String> listDB()
