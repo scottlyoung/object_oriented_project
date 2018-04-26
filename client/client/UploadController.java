@@ -62,6 +62,7 @@ public class UploadController extends JFrame{
     private void uploadButtonActionPerformed(ActionEvent evt) {
         Song song = new Song(songTitle.getText(),songArtist.getText(),SongGenre.getText(),"",00);
         DBManager.getInstance().addSong(song);
+        JOptionPane.showMessageDialog(null, "Successfully added a new song");
     }
     public void closeWindow(){
         this.setVisible(false);
