@@ -60,6 +60,8 @@ public class Home extends JFrame{
                 }
                 else{
                     showSearchResults(results, currentUser);
+                    closeWindow();
+
                 }
             }
         });
@@ -76,6 +78,9 @@ public class Home extends JFrame{
         this.getContentPane().add(playlistPanel,BorderLayout.CENTER);
         this.getContentPane().validate();
         this.getContentPane().repaint();
+    }
+    public void closeWindow(){
+        this.setVisible(false);
     }
 
 }
