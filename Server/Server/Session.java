@@ -20,7 +20,7 @@ public class Session extends Thread
 		{
 			try 
 			{
-				DBManager db = new DBManager();
+				DBManager db = DBManager.getInstance();
 				//System.out.println((int)db);
 				System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
