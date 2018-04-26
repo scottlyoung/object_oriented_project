@@ -1,5 +1,9 @@
 package client;
 
+import Server.Account;
+import Server.DBManager;
+import Server.Song;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -38,6 +42,12 @@ public class UploadController extends JFrame{
                 uploadButtonActionPerformed(evt);
             }
         });
+        cancelButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                closeWindow();
+            }
+        });
 
     }
     private void browseButtonActionPerformed(ActionEvent evt) {
@@ -50,6 +60,10 @@ public class UploadController extends JFrame{
         }
     }
     private void uploadButtonActionPerformed(ActionEvent evt) {
-        //TODO call DBManager to handle adding file to the DB
+        Song song = new Song(songTitle.getText(),songArtist.getText(),SongGenre.getText(),"",00);
+        DBManager.getInstance().addSong(song);
+    }
+    public void closeWindow(){
+        this.setVisible(false);
     }
 }
