@@ -21,3 +21,18 @@ SELECT p.name, playlistID FROM dbPlaylists p RIGHT JOIN dbAccounts a ON p.accoun
 
 Query: show songs from janedeers playlist Tswizzle
 SELECT title as 'Song Name', s.songID, p.name AS 'Playlist Name' FROM dbAccounts a JOIN dbPlaylists p ON a.accountID = p.accountID JOIN dbPlaylistSongs ps ON p.playlistID = ps.playlistID JOIN dbSongs s ON ps.songID = s.songID WHERE (a.name = 'janedeer') and (p.name = 'Tswizzle');
+
+
+-------------------------------
+
+1. download MySQL server
+2. download JDBC driver (connector/J)
+	-will need to add the .jar file to the classpath if using an editor OR run via command line with line below
+	-java -cp .:/path/to/mysql-connector.jar Server.TestDriver
+3. create a database in MySQL, a template database is provided on github
+	-(after logging into server) CREATE DATABASE databasename;
+	-(exit server for this command) mysql -u root -p databasename < filenameExample.sql
+4. create a java user
+	-CREATE USER 'java'@'localhost' IDENTIFIED BY 'pass123';
+	-GRANT ALL ON databasename.* TO 'java'@'localhost' IDENTIFIED BY 'pass123';
+5. A very basic use for connecting is in the test folder under db
