@@ -1,9 +1,6 @@
 package client;
 
-import Server.Account;
-import Server.Artist;
-import Server.Item;
-import Server.Song;
+import Server.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -67,18 +64,35 @@ public class SearchResults extends JFrame {
             rowPanel.setPreferredSize(new Dimension(300,100));
             rowPanel.setBackground(Color.white);
             mainPanel.add(rowPanel);
-            rowPanel.setLayout(new BorderLayout());
+            rowPanel.setLayout(new FlowLayout());
             JLabel label = new JLabel(items.get(i).toString());
-            rowPanel.add(label, BorderLayout.LINE_START);
+            rowPanel.add(label);
+            JButton playButton = new JButton("Play");
             JButton button;
             if(items.get(i) instanceof Song){
                 button = new JButton("Add");
+                rowPanel.add(playButton);
             }
             else {
                 button = new JButton("View");
             }
             rowPanel.add(button,  BorderLayout.LINE_END);
             Item item = items.get(i);
+
+            playButton.addActionListener( new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (item instanceof Song) {
+                        if(playButton.getText().compareToIgnoreCase("Play")==0){
+                            Player.getPlayer().playSong((Song)item);
+                            playButton.setText("Stop");
+                        }
+                        else{
+                            Player.getPlayer().pauseSong();
+                            playButton.setText("Play");
+                        }
+                    }
+                }});
 
             button.addActionListener( new ActionListener() {
                 @Override

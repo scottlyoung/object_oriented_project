@@ -66,7 +66,7 @@ public class App extends JFrame{
     }
     private void goToUploadView(){
         UploadController uploadController = new UploadController();
-        this.setVisible(false);
+  
         uploadController.setVisible(true);
     }
     private void SetupDBManager(){
@@ -79,7 +79,7 @@ public class App extends JFrame{
 
         // create user account
         Account userTemp = new Account("user", "pass");
-        accTemp.setIsAdmin(false);
+        userTemp.setIsAdmin(false);
         db.addAccount(userTemp);
         userTemp.addPlaylist("MyFav");
 
