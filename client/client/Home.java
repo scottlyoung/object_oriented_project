@@ -3,6 +3,9 @@ package client;
 import Server.*;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +16,7 @@ public class Home extends JFrame{
     private JPanel panel;
     private JTextField searchField;
     private JButton button1;
+    private JList list1;
     private JPanel createPlaylistPanel;
     private JTextField newPlaylistTextField;
     private JButton createPlaylistButton;
@@ -54,7 +58,12 @@ public class Home extends JFrame{
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Item> results = DBManager.getInstance().search(searchField.getText());
+                String value = (String)list1.getSelectedValue();
+                List<Item> results;
+                if (value == null)
+                    results = DBManager.getInstance().search(searchField.getText());
+                else
+                    results = DBManager.getInstance().search(value);
                 if(results.isEmpty()){
                     JOptionPane.showMessageDialog(null, "No Results Found");
                 }
@@ -65,6 +74,37 @@ public class Home extends JFrame{
                 }
             }
         });
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                act();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+                act();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+                act();
+            }
+
+            public void act()
+            {
+                List<Item> results = DBManager.getInstance().search(searchField.getText());
+                DefaultListModel model = new DefaultListModel();
+                for (Item s : results)
+                {
+                    model.addElement(s.getName());
+                }
+                list1.setModel(model);
+            }
+        });
+
+        list1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
     }
     private void  showSearchResults(List<Item> results, Account currentUser){
         SearchResults searchResults = new SearchResults(results, currentUser);
