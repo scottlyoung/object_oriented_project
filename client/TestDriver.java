@@ -19,7 +19,7 @@ public class TestDriver
 			}
 			List<String> list = new ArrayList<String>();
 			list.add(userInput);
-			response = session.callRemote("object", "function", list);
+			response = session.callRemote("0", "search", list);
 			System.out.println(response);
 		}
 	}

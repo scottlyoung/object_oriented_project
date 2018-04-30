@@ -1,5 +1,6 @@
 package Server;
 
+import java.util.*;
 import java.net.*;
 import java.io.*;
 
@@ -7,11 +8,11 @@ public class Session extends Thread
 {
 	private ServerSocket serverSocket;
 
-	public Session(int port) throws IOException 
+	public Session(int port) throws IOException
 	{
 		System.out.println("New Server.Session\n");
 		serverSocket = new ServerSocket(port);
-		serverSocket.setSoTimeout(10000);
+		serverSocket.setSoTimeout(30000);
 	}
 
 	public void run() 
@@ -21,24 +22,37 @@ public class Session extends Thread
 			try 
 			{
 				DBManager db = DBManager.getInstance();
-				//System.out.println((int)db);
+				HashMap objectMap = new HashMap();
+				objectMap.put("0", db);
 				System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
 				Socket server = serverSocket.accept();
 				DataOutputStream out = new DataOutputStream(server.getOutputStream());
 				DataInputStream in = new DataInputStream(server.getInputStream());
-
-				out.writeUTF("o" + db.toString());
 
 				System.out.println("Just connected to " + server.getRemoteSocketAddress());
 				while(true)
 				{
 					String inputString = in.readUTF();
 					System.out.println(inputString);
-					out.writeUTF("Thank you for the message.");
-					if (inputString.equals("q"))
-					{
-						break;
-					}
+					String queryType = inputString.substring(0,1);
+					System.out.println(queryType);
+					if (queryType.equals("c"))
+                    {
+                        System.out.println("Case");
+                        String query = inputString.substring(1);
+                        System.out.println(query);
+                        String[] queryParts = query.split("\\.");
+                        System.out.println(queryParts.length);
+                        for (String n : queryParts)
+                        {
+                            System.out.println(n);
+                        }
+                        out.writeUTF("Thank you for the message.");
+                    }
+                    else if (queryType.equals("q"))
+                    {
+                        break;
+                    }
 				}
 				server.close();
 
