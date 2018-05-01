@@ -27,11 +27,7 @@ public class App extends JFrame{
 
                 Account userTemp = DBManager.getInstance().getAccount(username);
                 if (userTemp != null && userTemp.isPassValid(password)) {
-                    if (userTemp.getIsAdmin()) {
-                        goToUploadView();
-                    } else {
                         goToHome(userTemp);
-                    }
                 }
                 else {
                     System.out.print("Invalid Login\n");
@@ -66,7 +62,7 @@ public class App extends JFrame{
     }
     private void goToUploadView(){
         UploadController uploadController = new UploadController();
-  
+
         uploadController.setVisible(true);
     }
     private void SetupDBManager(){

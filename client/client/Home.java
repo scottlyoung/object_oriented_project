@@ -32,7 +32,13 @@ public class Home extends JFrame{
         /** Create a new playlist Panel **/
         createPlaylistPanel = new JPanel();
         createPlaylistPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
+        JButton uploadButton = new JButton("upload to DB");
+        uploadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goToUploadView();
+            }
+        });
         JLabel newPlaylistLabel = new JLabel("Enter Playlist Name");
         newPlaylistTextField = new JTextField(30);
 
@@ -43,6 +49,9 @@ public class Home extends JFrame{
                 createPlaylist(newPlaylistTextField.getText(),currentUser);
             }
         });
+        if(currentUser.getIsAdmin()){
+            createPlaylistPanel.add(uploadButton);
+        }
 
         createPlaylistPanel.add(newPlaylistLabel);
         createPlaylistPanel.add(newPlaylistTextField);
@@ -121,6 +130,11 @@ public class Home extends JFrame{
     }
     public void closeWindow(){
         this.setVisible(false);
+    }
+    private void goToUploadView(){
+        UploadController uploadController = new UploadController();
+
+        uploadController.setVisible(true);
     }
 
 }
