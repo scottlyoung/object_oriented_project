@@ -1,7 +1,6 @@
 Built in mysql
 
-Import/Export Databases
------------------------
+Import/Export Databases:
 mysql -u username -p database_name < filename.sql
 mysqldump -u username -p database_name > filename.sql
 
@@ -36,3 +35,14 @@ SELECT title as 'Song Name', s.songID, p.name AS 'Playlist Name' FROM dbAccounts
 	-CREATE USER 'java'@'localhost' IDENTIFIED BY 'pass123';
 	-GRANT ALL ON databasename.* TO 'java'@'localhost' IDENTIFIED BY 'pass123';
 5. A very basic use for connecting is in the test folder under db
+
+
+-------------------------------
+
+*Using PostgreSQL, written for linux
+1. sudo apt install postgresql
+2. sudo -u postgres psql (for ubuntu)
+3. CREATE USER jonah WITH PASSWORD 'pass123';
+4. CREATE DATABASE mplayer;
+5. GRANT ALL PRIVILEGES ON DATABASE mplayer to jonah;
+6. TBD

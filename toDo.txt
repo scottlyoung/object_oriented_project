@@ -1,0 +1,11 @@
+1. Organize the github directory the way a package should be
+	-the random .iml file and out/ are created by an intellij project
+	-not perfect but manageable for now
+2. Make backend work correctly with player, make a perfect text menu
+	-uniqueness
+	-player playing the correct songs
+	-make sure admin accounts are create properly
+	-handle incorrect input
+3. Add the database to work with the DBManager object
+4. Alert group of current state of backend
+5. Potentially move on to make the front end
